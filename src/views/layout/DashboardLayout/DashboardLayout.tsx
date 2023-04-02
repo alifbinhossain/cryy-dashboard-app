@@ -9,9 +9,9 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
     <div className="flex min-h-screen flex-col">
       <DashboardNavbar />
 
-      <main className="mr-8 flex h-full flex-1 gap-5">
+      <main className=" mr-8 flex h-full flex-1 gap-5">
         <DashboardSidebar />
-        <div className="-mt-8 flex-1">{children}</div>
+        <div className="-mt-8 flex-1 bg-white">{children}</div>
       </main>
     </div>
   );

@@ -11,31 +11,37 @@ const DashboardSidebarItem: React.FC<{ item: SidebarLinksProps }> = ({
 }) => {
   const asPath = usePathname();
   const paths = asPath.split('/');
-  const parentPath = '/' + [...paths][1];
-  const nestedPath =
-    paths.length > 3 ? [...paths].slice(0, 3).join('/') : [...paths].join('/');
-  const [collapse, setCollapse] = useState(parentPath === item.link || false);
+  const parentPath = '/' + [...paths][1] + '/' + [...paths][2];
+  const nestedPath = paths.length > 3 && '/' + [...paths][paths.length - 1];
+
+  const [collapse, setCollapse] = useState(
+    parentPath === item.link || asPath === item.link || false
+  );
 
   return (
     <li className="">
       <div
         className={clsx(
           ' relative flex items-center justify-between rounded-[14px] py-4',
-          parentPath === item.link ? ' px-4' : ''
+          asPath === item.link || parentPath === item.link ? ' px-4' : ''
         )}
       >
         <Link
           className={clsx(
             'relative z-10 flex items-center gap-[10px] text-sm font-semibold',
-            parentPath === item.link ? 'text-primary' : 'text-alert-gray'
+            asPath === item.link || parentPath === item.link
+              ? 'text-primary'
+              : 'text-alert-gray'
           )}
-          href={item.link}
+          href={item.redirectLink ? item.redirectLink : item.link}
         >
           <div className={clsx(asPath === item.link ? 'h-5 w-5 ' : 'h-6 w-6')}>
             <img
               className="h-full w-full"
               src={
-                parentPath === item.link ? item.activeIcon : item.inactiveIcon
+                asPath === item.link || parentPath === item.link
+                  ? item.activeIcon
+                  : item.inactiveIcon
               }
               alt=""
             />
@@ -61,7 +67,7 @@ const DashboardSidebarItem: React.FC<{ item: SidebarLinksProps }> = ({
           </button>
         )}
 
-        {item.link === parentPath ? (
+        {asPath === item.link || parentPath === item.link ? (
           <motion.div
             className="absolute bottom-0 left-0 right-0 top-0 rounded-[14px]  bg-theme-green"
             layoutId="dash-link"
@@ -107,12 +113,24 @@ const DashboardSidebarItem: React.FC<{ item: SidebarLinksProps }> = ({
                 <Link
                   className={clsx(
                     'flex items-center gap-2 text-sm',
-                    nestedPath === e.link ? 'text-primary' : 'text-alert-gray'
+                    nestedPath === e.link || asPath === item.link + e.link
+                      ? 'text-primary'
+                      : 'text-alert-gray'
                   )}
-                  href={e?.redirectLink ? e.redirectLink : e.link}
+                  href={
+                    e?.redirectLink
+                      ? e.redirectLink
+                      : asPath.length > 3
+                      ? parentPath + e.link
+                      : item.link + e.link
+                  }
                 >
                   <img
-                    src={nestedPath === e.link ? e.activeIcon : e.inactiveIcon}
+                    src={
+                      nestedPath === e.link || asPath === item.link + e.link
+                        ? e.activeIcon
+                        : e.inactiveIcon
+                    }
                     alt=""
                   />
                   <span>{e.title}</span>
