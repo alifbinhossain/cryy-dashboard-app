@@ -1,0 +1,76 @@
+@import url('./fonts.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .sb {
+    @apply border border-red-500;
+  }
+
+  body {
+    @apply font-lexend;
+  }
+
+  h1 {
+    @apply text-[4rem] leading-[5rem];
+  }
+
+  h2 {
+    @apply text-5xl leading-[4rem];
+  }
+
+  h3 {
+    @apply text-[2rem] leading-[3rem];
+  }
+
+  h4 {
+    @apply text-2xl leading-9;
+  }
+
+  h5 {
+    @apply text-xl leading-[1.875rem];
+  }
+
+  h6 {
+    @apply text-lg leading-7;
+  }
+
+  button {
+    @apply text-base rounded-[14px] font-medium active:scale-95 transition-all ease-in;
+  }
+
+  input {
+    @apply text-sm font-normal text-primary focus:outline-none rounded-[10px] border border-[#D4D4D4] focus:border-alert-gray py-[18px] px-5;
+  }
+
+  input[type='password'] {
+    color: #000000;
+  }
+
+  input[type='password']:not(:placeholder-shown) {
+    font-family: caption;
+    font-size: 24px;
+    letter-spacing: 0.2em;
+    color: #d9d9d9;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+  input[data-autocompleted] {
+    background-color: transparent !important;
+  }
+}
+
+@layer components {
+}
+
+@layer utilities {
+  .shadow-primary {
+    box-shadow: 0px 0px 8px rgba(235, 235, 235, 0.5);
+  }
+}
